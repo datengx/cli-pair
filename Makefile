@@ -41,7 +41,7 @@ gdbus/watch.o:
 	gcc -O $(INC) -c ./gdbus/watch.c
 	mv watch.o gdbus/watch.o
 
-cli-pair: create_dir gdbus/mainloop.o gdbus/client.o gdbus/object.o gdbus/polkit.o gdbus/watch.o
+cli-pair: clean create_dir gdbus/mainloop.o gdbus/client.o gdbus/object.o gdbus/polkit.o gdbus/watch.o
 	$(CC) $(CCOPTS) $(INC) -o cli-pair $(client_bluetoothctl_SOURCES_DIST) $(DEP_OBJECT) $(LIBS)
 	mv cli-pair bin/cli-pair
 
@@ -49,8 +49,8 @@ create_dir:
 	mkdir bin
 
 clean_dir:
-
-clean:
+	rm -rf ./bin
+clean: clean_dir
 	rm -f $(TARGETS) $(DEP_OBJECT)
 
 %: %.c
