@@ -3,12 +3,17 @@
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
+#include <string.h>
 
 int main(int argc, char **argv)
 {
     struct sockaddr_rc addr = { 0 };
     int s, status;
-    char dest[18] = "94:39:E5:8E:5A:A2";
+    char dest[18] = "B8:27:EB:FB:7F:AD";
+    //    if (argc > 1) {
+      // using specified address
+      //strcpy(dest, argv[1]);
+    //}
 
     // allocate a socket
     s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
@@ -23,7 +28,7 @@ int main(int argc, char **argv)
 
     // send a message
     if( status == 0 ) {
-        status = write(s, "hello!", 6);
+        status = send(s, "hello!", 6, 0);
     }
 
     if( status < 0 ) perror("uh oh");

@@ -9,14 +9,16 @@ client_bluetoothctl_SOURCES_DIST = client/main.c \
 DEP_OBJECT = gdbus/mainloop.o gdbus/client.o gdbus/object.o gdbus/polkit.o gdbus/watch.o
 
 INC = -I/usr/include -I./ $(shell pkg-config --cflags dbus-glib-1) \
-                     $(shell pkg-config --cflags dbus-1) \
-										 $(shell pkg-config --cflags glib-2.0)
+                     $(shell pkg-config --cflags dbus-1)\
+		     $(shell pkg-config --cflags boost)\
+		     $(shell pkg-config --cflags glib-2.0)
 
 # Object cli-pair depends on
 LIBS = $(shell pkg-config --libs dbus-glib-1) \
        $(shell pkg-config --libs dbus-1) \
-       $(shell pkg-config --libs glib-2.0) \
-			 -L/usr/local/lib -lreadline
+       $(shell pkg-config --libs glib-2.0)\
+       $(shell pkg-config --libs boost)\
+       -L/usr/local/lib -lreadline
 
 all: $(TARGETS)
 
@@ -54,4 +56,4 @@ clean: clean_dir
 	rm -f $(TARGETS) $(DEP_OBJECT)
 
 %: %.c
-	$(CC) $(CCOPTS) -o $@ $< -lbluetooth
+	$(CC) $(CCOPTS) -o $@ $< -lbluetooth $(LIBS)
